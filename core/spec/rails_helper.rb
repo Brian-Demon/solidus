@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'shoulda-matchers'
 
 ENV["RAILS_ENV"] ||= 'test'
 
@@ -49,4 +50,11 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::JobHelpers
 
   config.include FactoryBot::Syntax::Methods
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end

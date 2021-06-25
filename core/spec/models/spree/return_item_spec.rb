@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'shoulda-matchers'
 
 RSpec.describe Spree::ReturnItem, type: :model do
   all_reception_statuses = Spree::ReturnItem.state_machines[:reception_status].states.map(&:name).map(&:to_s)
   all_acceptance_statuses = Spree::ReturnItem.state_machines[:acceptance_status].states.map(&:name).map(&:to_s)
+
+  describe 'associations' do
+    it { should belong_to(:inventory_unit).inverse_of(:return_items).optional }
+  end
+
 
   shared_examples "an invalid state transition" do |status, expected_status|
     let(:status) { status }
